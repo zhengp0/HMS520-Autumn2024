@@ -15,3 +15,22 @@ vec1[vec1 == 0] <- seq(2, 10, by = 2)
 
 # remove 2nd and 5th elements
 vec1[-c(2, 5)]
+
+# how to combine two vectors
+vec2 <- 2:5
+c(vec1, vec2)
+
+# create named atomic vectors
+vec3 <- c(x = 1, y = 2, z = 3)
+names(vec3)
+vec3 <- 1:3
+names(vec3) <- c("x", "y", "z")
+vec3["x"]
+
+# how to get number of characters of a string
+vec4 <- c("abc", "bb", "c")
+length(vec4)
+nchar(vec4)
+sum(nchar(vec4))
+
+
