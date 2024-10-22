@@ -22,3 +22,33 @@ john[["email"]] <- "john@uw.edu"
 
 # remove John's phone number
 john[["phone_number"]] <- NULL
+
+# list of lists
+lucy <- list(
+  name = "Lucy",
+  phone_number = rep(0, 10L),
+  email = "lucy@uw.edu"
+)
+
+contacts <- list(
+  john = john,
+  lucy = lucy
+)
+
+# length
+length(contacts)
+length(lucy)
+
+# lapply
+lapply(contacts, function(x) x$name)
+
+# unlist
+john_vec <- unlist(john)
+lucy_vec <- unlist(lucy)
+
+# names
+names(contacts)
+names(contacts) <- c("contact1", "contact2")
+str(contacts)
+
+
