@@ -21,7 +21,7 @@ m1[, 1]
 # access 6th element
 m1[6]
 
-# access the entir matrix
+# access the entire matrix
 m1
 m1[]
 
