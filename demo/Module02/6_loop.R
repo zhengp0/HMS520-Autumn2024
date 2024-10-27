@@ -22,7 +22,6 @@ for (i in 1:100) {
     print(i)
     sum_vec <- sum_vec + i
   }
-  
   if (i >= 20) {
     break
   }
@@ -30,3 +29,30 @@ for (i in 1:100) {
 
 vec <- 1:100
 sum(vec[vec %% 3 == 0 & vec <= 20])
+
+# while and repeat loop
+sum_vec <- 0
+i <- 1
+
+while (i <= 20) {
+  if (i %% 3 == 0) {
+    print(i)
+    sum_vec <- sum_vec + i
+  }
+  i <- i + 1
+}
+
+sum_vec <- 0
+i <- 1
+repeat {
+  if (i > 20) {
+    break
+  }
+  
+  if (i %% 3 == 0) {
+    print(i)
+    sum_vec <- sum_vec + i
+  }
+  i <- i + 1
+}
+
