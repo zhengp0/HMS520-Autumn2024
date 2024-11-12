@@ -38,6 +38,13 @@ df_death_mod <- df_death[, list(death_ihd = death)]
 df_death_mod <- copy(df_death)
 setnames(df_death_mod, "death", "death_ihd")
 
+# 3. add
+# add column: j expression, :=
+df_death_add <- copy(df_death)
+df_death_add[, log_death := log(death)]
+df_death_add[, c("log_death", "sqrt_death") := list(log(death), sqrt(death))]
+df_death_add[, `:=`(log_death = log(death), sqrt_death = sqrt(death))]
+
 
 ### Dark Magic
 dt_iris <- setDT(copy(iris))
