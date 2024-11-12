@@ -37,3 +37,14 @@ df_death_mod <- df_death[order(!death)]
 df_death_mod <- df_death[, list(death_ihd = death)]
 df_death_mod <- copy(df_death)
 setnames(df_death_mod, "death", "death_ihd")
+
+
+### Dark Magic
+dt_iris <- setDT(copy(iris))
+selected_cols <- c("Sepal.Length", "Sepal.Width")
+
+for (col in selected_cols) {
+  j_expr <- parse(text=paste0("mean_", col, " := mean(", col, ")"))
+  print(j_expr)
+  dt_iris[, eval(j_expr), by = Species]
+}
