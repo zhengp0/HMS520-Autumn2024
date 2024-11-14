@@ -45,6 +45,110 @@ df_death_add[, log_death := log(death)]
 df_death_add[, c("log_death", "sqrt_death") := list(log(death), sqrt(death))]
 df_death_add[, `:=`(log_death = log(death), sqrt_death = sqrt(death))]
 
+# rbind, cbind
+df_death_extra_row <- data.table(
+  location_id = 6,
+  age_group_id = 1:5,
+  sex_id = 1,
+  death = 5
+)
+df_death_add <- rbind(df_death, df_death_extra_row)
+
+df_death_extra_col <- data.table(
+  row_id = seq_len(nrow(df_death)),
+  random = rnorm(nrow(df_death))
+)
+
+df_death_add <- cbind(df_death, df_death_extra_col)
+
+# 4. join
+# merge death and population
+
+df_combined <- merge(
+  df_death,
+  df_population,
+  by = c("location_id", "age_group_id", "sex_id")
+)
+
+# what if there are columns with same name
+df_death_second <- copy(df_death)
+df_combined <- merge(
+  df_death,
+  df_death_second,
+  by = c("location_id", "age_group_id", "sex_id"),
+  suffix = c("", "_copy")
+)
+
+# what if the number of rows are different: left, right, inner
+df_death_extra <- data.table(
+  location_id = 6,
+  age_group_id = 1:5,
+  sex_id = 1,
+  death = 5
+)
+df_death_add <- rbind(df_death, df_death_extra)
+
+# inner
+df_combined <- merge(
+  df_death_add,
+  df_population,
+  by = c("location_id", "age_group_id", "sex_id"),
+)
+
+# left
+df_combined <- merge(
+  df_death_add,
+  df_population,
+  by = c("location_id", "age_group_id", "sex_id"),
+  all.x = TRUE
+)
+
+# right
+df_combined <- merge(
+  df_death_add,
+  df_population,
+  by = c("location_id", "age_group_id", "sex_id"),
+  all.y = TRUE
+)
+
+# full
+df_combined <- merge(
+  df_death_add,
+  df_population,
+  by = c("location_id", "age_group_id", "sex_id"),
+  all = TRUE
+)
+
+# what if there are multiple matches
+df1 <- data.table(
+  index = c(1, 1, 2, 2),
+  value = c(1, 2, 3, 4)
+)
+
+df2 <- data.table(
+  index = c(1, 1, 2),
+  value = c(5, 6, 7)
+)
+
+df_combined <- merge(
+  df1, df2, by = "index", suffix = c("_1", "_2")
+)
+
+# what if the names you try to match are different in two data frames
+df1 <- data.table(
+  index_1 = c(1, 1, 2, 2),
+  value_1 = c(1, 2, 3, 4)
+)
+
+df2 <- data.table(
+  index_2 = c(1, 1, 2),
+  value_2 = c(5, 6, 7)
+)
+
+df_combined <- merge(
+  df1, df2, by.x = "index_1", by.y = "index_2"
+)
+
 
 ### Dark Magic
 dt_iris <- setDT(copy(iris))
