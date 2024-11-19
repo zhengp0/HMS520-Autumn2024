@@ -149,6 +149,33 @@ df_combined <- merge(
   df1, df2, by.x = "index_1", by.y = "index_2"
 )
 
+# 5. pivot
+# pivot long
+df_long <- melt(
+  df_hours,
+  id.vars = "project",
+  measure.vars = c("A", "B", "C", "D"),
+  variable.name = "employee",
+  value.name = "hours"
+)
+
+# compute how much we pay for each employee
+df_result <- merge(
+  df_long,
+  df_pay,
+  by = "project",
+  all.x = TRUE
+)
+df_result[, pay := hours * dollar_per_hour]
+df_total <- df_result[, list(total = sum(pay)), by = "employee"]
+
+# pivot wide
+df_wide <- dcast(
+  df_result,
+  project ~ employee,
+  value.var = "pay"
+)
+
 
 ### Dark Magic
 dt_iris <- setDT(copy(iris))
