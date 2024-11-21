@@ -177,6 +177,34 @@ df_wide <- dcast(
 )
 
 
+# which religion earn the most?
+library("tidyr")
+
+class(relig_income)
+dt_relig_income <- as.data.table(relig_income)
+class(dt_relig_income)
+
+col_names <- colnames(dt_relig_income)
+col_names <- col_names[!(col_names %in% c("religion", "Don't know/refused"))]
+dt_long <- melt(
+  dt_relig_income,
+  id.vars = "religion",
+  measure.vars = col_names,
+  variable.name = "income",
+  value.name = "count"
+)
+
+dt_long[, total := sum(count), by = religion]
+dt_long[, prop := count / total]
+
+dt_wide <- dcast(
+  dt_long,
+  religion ~ income,
+  value.var = "prop"
+)
+
+View(dt_wide[order(`>150k`)])
+
 ### Dark Magic
 dt_iris <- setDT(copy(iris))
 selected_cols <- c("Sepal.Length", "Sepal.Width")
