@@ -14,7 +14,7 @@ location_id <- as.numeric(arguments[1])
 outdir <- "masked/gbd_2020_test_type2_age_15_plus/"
 
 ## get t1, t2 prevalence
-dm_prev <- get_dm_prev(...)
+dm_prev <- get_dm_prev(location_id = location_id, age_group_id = age_group_id)
 
-## reshape and save t1 and t2
+## reshape and save t1 and t2 and save them
 
